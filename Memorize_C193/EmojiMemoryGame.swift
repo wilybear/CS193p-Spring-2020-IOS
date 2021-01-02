@@ -19,8 +19,8 @@ class EmojiMemoryGame{
     
     //if you put static it means function on the type(EmojiMemoryGame), x function on instance of class
     static func createMemoryGame() -> MemoryGame<String> {
-        let emojis: Array<String> = ["🎃","👻"]
-        return MemoryGame<String>(numberOfPairsOfCards: 2) { pairIndx in
+        let emojis: Array<String> = ["🎃","👻","👾"]
+        return MemoryGame<String>(numberOfPairsOfCards: emojis.count) { pairIndx in
             return emojis[pairIndx]
         }    //_  means unused in swift
     }

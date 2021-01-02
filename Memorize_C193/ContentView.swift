@@ -14,10 +14,12 @@ struct ContentView: View {
         //horizontal stack
        HStack{
         ForEach(viewModel.cards) { card in
-            CardView(card: card)
+            CardView(card: card).onTapGesture {
+                viewModel.choose(card: card)
+            }
             //sily question return CardView doesn't genreate error
             }
-        }
+       }
             .foregroundColor(Color.orange)
             .padding()
             .font(Font.largeTitle)
