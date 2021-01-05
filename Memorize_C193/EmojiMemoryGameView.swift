@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct EmojiMemoryGameView: View {
     var viewModel: EmojiMemoryGame
         
     var body: some View {
@@ -16,20 +16,20 @@ struct ContentView: View {
         ForEach(viewModel.cards) { card in
             CardView(card: card).onTapGesture {
                 viewModel.choose(card: card)
-            }
+            }.aspectRatio(0.66, contentMode: .fit)
             //sily question return CardView doesn't genreate error
-            }
+        }
        }
             .foregroundColor(Color.orange)
             .padding()
-            .font(Font.largeTitle)
+       .font(viewModel.cards.count != 5 ? Font.largeTitle : Font.body)
         
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(viewModel: EmojiMemoryGame())
+        EmojiMemoryGameView(viewModel: EmojiMemoryGame())
     }
 }
 
