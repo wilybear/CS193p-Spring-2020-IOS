@@ -10,6 +10,7 @@ import Foundation
 struct MemoryGame<CardContent> {
     var cards: Array<Card>
     
+    //mutating,, all init is mutating
     init(numberOfPairsOfCards: Int, cardContentFactory: (Int)->CardContent) {
         cards = Array<Card>()
         for pairIndex in 0..<numberOfPairsOfCards{
@@ -19,11 +20,22 @@ struct MemoryGame<CardContent> {
             cards.append(Card(content: content, id: pairIndex*2+1))
         }
         cards.shuffle()
-        
     }
     
-    func choose(card: Card){
+    // all functions modify self have to be marked 'mutating' in struct, x class
+    mutating func choose(card: Card){
         print("card choosen: \(card)")
+        let chosenIndex: Int = self.index(of: card)
+        self.cards[chosenIndex].isFaceUp = !self.cards[chosenIndex].isFaceUp
+    }
+    
+    func index(of card: Card) -> Int{
+        for index in 0..<self.cards.count{
+            if self.cards[index].id == card.id{
+                return index
+            }
+        }
+        return 0 // TODO : bogus!
     }
     
     //MemoryGame.Card
