@@ -14,14 +14,13 @@ struct EmojiMemoryGameView: View {
         
     var body: some View {
         //horizontal stack
-       HStack{
-        ForEach(viewModel.cards) { card in
+        Grid(viewModel.cards) { card in
             CardView(card: card).onTapGesture {
                 viewModel.choose(card: card)
             }.aspectRatio(0.66, contentMode: .fit)
+            .padding(5)
             //sily question return CardView doesn't genreate error
         }
-       }
             .foregroundColor(Color.orange)
             .padding()
     }
@@ -43,7 +42,9 @@ struct CardView: View{
                     RoundedRectangle(cornerRadius: cornerRadius).stroke(lineWidth: edgeLineWidth)
                     Text(card.content)
                 } else {
-                    RoundedRectangle(cornerRadius: cornerRadius).fill()
+                    if !card.isMatched{
+                        RoundedRectangle(cornerRadius: cornerRadius).fill()
+                    }
                 }
             }
             .font(Font.system(size: fontSize(for: geometry.size)))
