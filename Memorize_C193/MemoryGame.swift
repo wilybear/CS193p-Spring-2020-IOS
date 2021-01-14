@@ -9,6 +9,9 @@ import Foundation
 
 struct MemoryGame<CardContent> where CardContent: Equatable {
     var cards: Array<Card>
+    var theme: Theme
+    var score: Int = 0
+    var openedCard: [CardContent] = [CardContent]()
     
     var indexOfTheOneAndOnlyFaceUpCard: Int? {
         get {
@@ -22,8 +25,9 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     }
     
     //mutating,, all init is mutating
-    init(numberOfPairsOfCards: Int, cardContentFactory: (Int)->CardContent) {
+    init(numberOfPairsOfCards: Int,theme : Theme ,cardContentFactory: (Int)->CardContent) {
         cards = Array<Card>()
+        self.theme = theme
         for pairIndex in 0..<numberOfPairsOfCards{
             let content = cardContentFactory(pairIndex)
             //let content : Cardcontent ->>> inferring type
@@ -40,6 +44,20 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
                 if cards[chosenIndex].content == cards[potentialMatchIndex].content{
                     cards[chosenIndex].isMatched = true
                     cards[potentialMatchIndex].isMatched = true
+                    score += 2
+                }else{
+                    if openedCard.firstIndex(of: cards[chosenIndex].content) == nil {
+                        openedCard.append(cards[chosenIndex].content)
+                    }
+                    else{
+                        score -= 1
+                    }
+                    if openedCard.firstIndex(of: cards[potentialMatchIndex].content) == nil {
+                        openedCard.append(cards[potentialMatchIndex].content)
+                    }
+                    else{
+                        score -= 1
+                    }
                 }
                 self.cards[chosenIndex].isFaceUp = true
             }else{
@@ -65,3 +83,37 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         var id: Int
     }
 }
+
+enum Theme : CaseIterable{
+    case halloween, sport, animal, face
+
+    static func getRandomCase()->Theme{
+        allCases.randomElement()!
+    }
+    func getEmojiArray()->[String]{
+        switch self {
+            case .halloween:
+                return ["🎃","👻","👾","🥵","👹","🤖","🥶","😱"]
+            case .animal:
+                return ["🐶","🐱","🐭","🐹","🐼","🐮","🐷"]
+            case .face:
+                return ["😀","🤪","😛","😇","☺️","😌","🥰","😎"]
+            case .sport:
+                return ["⚽️","🏀","🏈","⚾️","🏓","⛳️","🏏"]
+        }
+    }
+    
+    func getEmojiName()->String{
+        switch self {
+           case .halloween:
+               return "halloween"
+           case .animal:
+               return "animal"
+           case .face:
+               return "face"
+           case .sport:
+               return "sport"
+        }
+    }
+}
+

@@ -11,18 +11,48 @@ struct EmojiMemoryGameView: View {
     //this var has obeservedObject, it says objectwillchange and redraw UI
     //redraw not whole thing but changed one by identifier
     @ObservedObject var viewModel: EmojiMemoryGame
+    var themeColor : Color {
+        get{
+            switch viewModel.theme {
+            case .halloween:
+                return Color.orange
+            case .animal:
+                return Color.green
+            case .sport:
+                return Color.blue
+            case .face:
+                return Color.yellow
+            }
+        }
+    }
+    
         
     var body: some View {
+        VStack{
         //horizontal stack
-        Grid(viewModel.cards) { card in
-            CardView(card: card).onTapGesture {
-                viewModel.choose(card: card)
-            }.aspectRatio(0.66, contentMode: .fit)
-            .padding(5)
-            //sily question return CardView doesn't genreate error
+            HStack(alignment: .center, spacing: 10){
+                Button("NewGame"){
+                    viewModel.startNewGame()
+                }.padding()
+                Spacer()
+                Text(String(viewModel.score))
+                Spacer()
+                Text(viewModel.theme.getEmojiName())
+                    .padding()
+            }
+            .font(Font.title2)
+            .frame(height:50)
+
+            Grid(viewModel.cards) { card in
+                CardView(card: card).onTapGesture {
+                    viewModel.choose(card: card)
+                }
+                .aspectRatio(0.66, contentMode: .fit)
+                .padding()
+                //sily question return CardView doesn't genreate error
+            }
+            .foregroundColor(themeColor)
         }
-            .foregroundColor(Color.orange)
-            .padding()
     }
 }
 

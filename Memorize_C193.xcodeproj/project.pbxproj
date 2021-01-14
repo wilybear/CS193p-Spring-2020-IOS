@@ -68,18 +68,18 @@
 		37DE8B0825A0E83B0090C609 /* Memorize_C193 */ = {
 			isa = PBXGroup;
 			children = (
-				370D41AA25A9D1FE00318A48 /* GridLayout.swift */,
-				37DE8B1F25A0E8900090C609 /* EmojiMemoryGame.swift */,
-				37DE8B1E25A0E8900090C609 /* MemoryGame.swift */,
-				37918E6725AF1C42001BD961 /* Array+Only.swift */,
+				37DE8B1725A0E83C0090C609 /* Info.plist */,
 				37DE8B0925A0E83B0090C609 /* AppDelegate.swift */,
-				37DE8B0B25A0E83B0090C609 /* SceneDelegate.swift */,
+				37918E6425AB2945001BD961 /* Array+Identifiable.swift */,
+				37918E6725AF1C42001BD961 /* Array+Only.swift */,
+				37DE8B1F25A0E8900090C609 /* EmojiMemoryGame.swift */,
 				37DE8B0D25A0E83B0090C609 /* EmojiMemoryGameView.swift */,
 				370D41A325A9BC6F00318A48 /* Grid.swift */,
-				37918E6425AB2945001BD961 /* Array+Identifiable.swift */,
+				370D41AA25A9D1FE00318A48 /* GridLayout.swift */,
+				37DE8B1E25A0E8900090C609 /* MemoryGame.swift */,
+				37DE8B0B25A0E83B0090C609 /* SceneDelegate.swift */,
 				37DE8B0F25A0E83C0090C609 /* Assets.xcassets */,
 				37DE8B1425A0E83C0090C609 /* LaunchScreen.storyboard */,
-				37DE8B1725A0E83C0090C609 /* Info.plist */,
 				37DE8B1125A0E83C0090C609 /* Preview Content */,
 			);
 			path = Memorize_C193;

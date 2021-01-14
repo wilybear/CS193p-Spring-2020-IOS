@@ -22,9 +22,10 @@ class EmojiMemoryGame : ObservableObject{
     	
     //if you put static it means function on the type(EmojiMemoryGame), x function on instance of class
     static func createMemoryGame() -> MemoryGame<String> {
-        let emojis: Array<String> = ["🎃","👻","👾","🥵","👹","🤖","🥶","😱"].shuffled()
-        return MemoryGame<String>(numberOfPairsOfCards: Int.random(in: 2...5)) { pairIndx in
-            return emojis[pairIndx]
+        let theme = Theme.getRandomCase()
+        let emojis: Array<String> = theme.getEmojiArray().shuffled()
+        return MemoryGame<String>(numberOfPairsOfCards: Int.random(in: 2...5),theme: theme ) { pairIndex in
+            return emojis[pairIndex]
         }    //_  means unused in swift
     }
 
@@ -34,12 +35,23 @@ class EmojiMemoryGame : ObservableObject{
     var cards: Array<MemoryGame<String>.Card>{
         model.cards
     }
+    var theme: Theme{
+        model.theme
+    }
+    
+    var score: Int{
+        model.score
+    }
     //maybe interpretation (massage data into some form / might work data network request)
     
     // MARK: - Intent(s)
     func choose(card: MemoryGame<String>.Card){
     //    objectWillChange.send()
         model.choose(card: card)
+    }
+    
+    func startNewGame(){
+        model = EmojiMemoryGame.createMemoryGame()
     }
     
 }
