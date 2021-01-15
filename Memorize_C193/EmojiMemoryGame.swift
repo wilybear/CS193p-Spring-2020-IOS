@@ -22,7 +22,7 @@ class EmojiMemoryGame : ObservableObject{
     	
     //if you put static it means function on the type(EmojiMemoryGame), x function on instance of class
     static func createMemoryGame() -> MemoryGame<String> {
-        let theme = Theme.getRandomCase()
+        let theme = MemoryGame<String>.Theme.getRandomCase()
         let emojis: Array<String> = theme.getEmojiArray().shuffled()
         return MemoryGame<String>(numberOfPairsOfCards: Int.random(in: 2...5),theme: theme ) { pairIndex in
             return emojis[pairIndex]
@@ -35,7 +35,7 @@ class EmojiMemoryGame : ObservableObject{
     var cards: Array<MemoryGame<String>.Card>{
         model.cards
     }
-    var theme: Theme{
+    var theme: MemoryGame<String>.Theme{
         model.theme
     }
     

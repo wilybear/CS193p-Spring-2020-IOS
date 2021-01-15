@@ -11,17 +11,17 @@ struct EmojiMemoryGameView: View {
     //this var has obeservedObject, it says objectwillchange and redraw UI
     //redraw not whole thing but changed one by identifier
     @ObservedObject var viewModel: EmojiMemoryGame
-    var themeColor : Color {
+    private var themeColor : (Color,Color) {
         get{
             switch viewModel.theme {
             case .halloween:
-                return Color.orange
+                return (.orange,.green)
             case .animal:
-                return Color.green
+                return (.green,.gray)
             case .sport:
-                return Color.blue
+                return (.blue,.orange)
             case .face:
-                return Color.yellow
+                return (.yellow,.pink)
             }
         }
     }
@@ -44,14 +44,14 @@ struct EmojiMemoryGameView: View {
             .frame(height:50)
 
             Grid(viewModel.cards) { card in
-                CardView(card: card).onTapGesture {
+                CardView(card: card, colorTuple : themeColor).onTapGesture {
                     viewModel.choose(card: card)
                 }
                 .aspectRatio(0.66, contentMode: .fit)
                 .padding()
                 //sily question return CardView doesn't genreate error
             }
-            .foregroundColor(themeColor)
+            .foregroundColor(themeColor.0)
         }
     }
 }
@@ -64,6 +64,7 @@ struct ContentView_Previews: PreviewProvider {
 
 struct CardView: View{
     var card : MemoryGame<String>.Card
+    var colorTuple : (Color, Color)
     var body: some View{
         GeometryReader{ geometry in
             ZStack{
@@ -73,7 +74,10 @@ struct CardView: View{
                     Text(card.content)
                 } else {
                     if !card.isMatched{
-                        RoundedRectangle(cornerRadius: cornerRadius).fill()
+                        //Extra credit, gradient color
+                        RoundedRectangle(cornerRadius: cornerRadius).fill(
+                            LinearGradient(gradient: Gradient(colors: [colorTuple.0, colorTuple.1]), startPoint: /*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/, endPoint: /*@START_MENU_TOKEN@*/.trailing/*@END_MENU_TOKEN@*/)
+                        )
                     }
                 }
             }
@@ -85,9 +89,9 @@ struct CardView: View{
     
     // MARK: - Drawing Constants
     
-    let cornerRadius:CGFloat = 10
-    let edgeLineWidth:CGFloat = 3
-    func fontSize(for size: CGSize) -> CGFloat{
+    private let cornerRadius:CGFloat = 10
+    private let edgeLineWidth:CGFloat = 3
+    private func fontSize(for size: CGSize) -> CGFloat{
         min(size.width, size.height) * 0.75
     }
     

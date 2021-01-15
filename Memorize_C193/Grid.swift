@@ -10,8 +10,8 @@ import SwiftUI
 //generic structure example
 //grid container
 struct Grid<Item, ItemView>: View where Item: Identifiable, ItemView: View {
-    var items: [Item]
-    var viewForItem: (Item) -> ItemView
+    private var items: [Item]
+    private var viewForItem: (Item) -> ItemView
     
     //escaping closure : it is going to escape from initializer without getting called
     //change them to reference type and have pointers to them.
