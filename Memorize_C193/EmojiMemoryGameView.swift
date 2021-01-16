@@ -56,43 +56,38 @@ struct EmojiMemoryGameView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        EmojiMemoryGameView(viewModel: EmojiMemoryGame())
-    }
-}
 
 struct CardView: View{
     var card : MemoryGame<String>.Card
     var colorTuple : (Color, Color)
     var body: some View{
         GeometryReader{ geometry in
-            ZStack{
-                if card.isFaceUp{
-                    RoundedRectangle(cornerRadius: cornerRadius).fill(Color.white)
-                    RoundedRectangle(cornerRadius: cornerRadius).stroke(lineWidth: edgeLineWidth)
+            //@Viewbuilder, if it is function
+            if card.isFaceUp || !card.isMatched{
+                ZStack{
+                    Pie(startAngle: Angle.degrees(0-90), endAngle: Angle.degrees(110-90),clockwise: true).padding(5).opacity(0.4)
                     Text(card.content)
-                } else {
-                    if !card.isMatched{
-                        //Extra credit, gradient color
-                        RoundedRectangle(cornerRadius: cornerRadius).fill(
-                            LinearGradient(gradient: Gradient(colors: [colorTuple.0, colorTuple.1]), startPoint: /*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/, endPoint: /*@START_MENU_TOKEN@*/.trailing/*@END_MENU_TOKEN@*/)
-                        )
-                    }
+                        .font(Font.system(size: fontSize(for: geometry.size)))
                 }
+                .cardify(isFaceUp: card.isFaceUp)
             }
-            .font(Font.system(size: fontSize(for: geometry.size)))
         }
     }
     
     //func body(for size:CGSize) -> some View{ ... }
     
     // MARK: - Drawing Constants
-    
-    private let cornerRadius:CGFloat = 10
-    private let edgeLineWidth:CGFloat = 3
     private func fontSize(for size: CGSize) -> CGFloat{
-        min(size.width, size.height) * 0.75
+        min(size.width, size.height) * 0.7
     }
-    
+   
+}
+
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        let game = EmojiMemoryGame()
+        game.choose(card: game.cards[2])
+        return EmojiMemoryGameView(viewModel: game)
+    }
 }
