@@ -7,10 +7,21 @@
 
 import SwiftUI
 
-struct Pie: Shape {
+struct Pie: Shape { //Shape already has Animatable
     var startAngle: Angle
     var endAngle: Angle
     var clockwise: Bool = false
+    
+    var animatableData: AnimatablePair<Double,Double> {
+        get{
+            AnimatablePair(startAngle.radians,endAngle.radians)
+        }
+        set{
+            startAngle = Angle.radians(newValue.first)
+            endAngle = Angle.radians(newValue.second)
+        }
+    }
+    
     //rect in which where we're supposed to fit out Shape
     func path(in rect: CGRect) -> Path {
         let center = CGPoint(x: rect.midX, y: rect.midY)
