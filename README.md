@@ -11,4 +11,7 @@ About detail Information (Lecture notes)
 - Assignment 1 - Done
 - Lecture 3 - Done
 - Lecture 4 - Done
-- Assignment 2 - On Going
+- Assignment 2 - Done
+- Lecture 5 - Done
+- Lecture 6 - Done
+- Assignment 3 - Done https://github.com/wilybear/CS193p-Assignment3-SetGame
