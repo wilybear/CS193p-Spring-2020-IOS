@@ -1,5 +1,5 @@
-# Memorize_C193
-stanford c193, card matching game Spring 2020
+# CS193p 2020 IOS Dev
+stanford c193 Spring 2020
 
 For detail Information (Lecture notes)
 <a href=https://www.notion.so/wilybear/IOS-Dev-e2ea6af18f28434d9ea9773fa274586a> notion </a>
