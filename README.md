@@ -1,7 +1,7 @@
 # Memorize_C193
 stanford c193, card matching game Spring 2020
 
-About detail Information (Lecture notes)
+For detail Information (Lecture notes)
 <a href=https://www.notion.so/wilybear/IOS-Dev-e2ea6af18f28434d9ea9773fa274586a> notion </a>
 
 # Progress
