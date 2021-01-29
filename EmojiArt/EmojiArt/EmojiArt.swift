@@ -40,8 +40,8 @@ struct EmojiArt : Codable{
             self = newEmojiArt
         } else {
             return nil
-        }
-    }
+
+        }    }
     init(){
         
     }
@@ -50,4 +50,8 @@ struct EmojiArt : Codable{
         uniqueEmojiId += 1
         emojis.append(Emoji(text: text, x: x, y: y, size: size, id: uniqueEmojiId))
     }
+
+
+    
+    
 }

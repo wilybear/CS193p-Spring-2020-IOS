@@ -12,6 +12,7 @@ class EmojiArtDocument : ObservableObject{
     
     @Published private var emojiArt: EmojiArt {
         didSet {
+            print("json = \(emojiArt.json?.utf8 ?? "nil")")
             UserDefaults.standard.set(emojiArt.json, forKey: EmojiArtDocument.untitled)
         }
     }
@@ -36,9 +37,14 @@ class EmojiArtDocument : ObservableObject{
             emojiArt.emojis[index].y += Int(offset.height)
         }
     }
-    func moveEmoji(_ emoji: EmojiArt.Emoji, by scale: CGFloat){
+    func scaleEmoji(_ emoji: EmojiArt.Emoji, by scale: CGFloat){
         if let index = emojiArt.emojis.firstIndex(matching: emoji){
             emojiArt.emojis[index].size = Int((CGFloat(emojiArt.emojis[index].size)*scale).rounded(.toNearestOrEven))
+        }
+    }
+    func removeEmoji(_ emoji: EmojiArt.Emoji){
+        if let index = emojiArt.emojis.firstIndex(matching: emoji){
+            emojiArt.emojis.remove(at: index)
         }
     }
     
@@ -61,6 +67,8 @@ class EmojiArtDocument : ObservableObject{
             }
         }
     }
+    
+    
 }
 
 extension EmojiArt.Emoji{
