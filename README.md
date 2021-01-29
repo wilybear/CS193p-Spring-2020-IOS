@@ -18,6 +18,7 @@ For detail Information (Lecture notes)
 - Lecture 7 - Done
 - Lecture 8 - Done
 - Assignment 4 - Done
+- Assignment 5 - Done
 
 
 # Assignment 4
