@@ -5,11 +5,10 @@
 //  Created by 김현식 on 2021/01/02.
 //
 
-import Foundation
+import SwiftUI
 
 struct MemoryGame<CardContent> where CardContent: Equatable {
     private(set) var cards: Array<Card>
-    private(set) var theme: Theme
     private(set) var score: Int = 0
     private var openedCard: [CardContent] = [CardContent]()
     private var lastMatchedDate : Date
@@ -26,9 +25,8 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     }
     
     //mutating,, all init is mutating
-    init(numberOfPairsOfCards: Int,theme : Theme ,cardContentFactory: (Int)->CardContent) {
+    init(numberOfPairsOfCards: Int,cardContentFactory: (Int)->CardContent) {
         cards = Array<Card>()
-        self.theme = theme
         lastMatchedDate = Date()
         for pairIndex in 0..<numberOfPairsOfCards{
             let content = cardContentFactory(pairIndex)
@@ -158,39 +156,6 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         
     }
     
-
-    enum Theme : CaseIterable{
-        case halloween, sport, animal, face
-
-        static func getRandomCase()->Theme{
-            allCases.randomElement()!
-        }
-        func getEmojiArray()->[String]{
-            switch self {
-                case .halloween:
-                    return ["🎃","👻","👾","🥵","👹","🤖","🥶","😱"]
-                case .animal:
-                    return ["🐶","🐱","🐭","🐹","🐼","🐮","🐷"]
-                case .face:
-                    return ["😀","🤪","😛","😇","☺️","😌","🥰","😎"]
-                case .sport:
-                    return ["⚽️","🏀","🏈","⚾️","🏓","⛳️","🏏"]
-            }
-        }
-        
-        func getEmojiName()->String{
-            switch self {
-               case .halloween:
-                   return "halloween"
-               case .animal:
-                   return "animal"
-               case .face:
-                   return "face"
-               case .sport:
-                   return "sport"
-            }
-        }
-    }
 }
 
 

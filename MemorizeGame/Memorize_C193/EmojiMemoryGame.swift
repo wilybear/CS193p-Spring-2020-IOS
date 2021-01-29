@@ -17,14 +17,23 @@ import SwiftUI
 class EmojiMemoryGame : ObservableObject{
     
     //property wrapper, evert tune modle changes it calls objectwillchange()
-    @Published private var model: MemoryGame<String>  = EmojiMemoryGame.createMemoryGame()
+    @Published private var model: MemoryGame<String>
     //private(set) means only EmojiMemoryGame can modify model, but every view can see it
+    var theme: Theme{
+        didSet{
+            print("json = \(theme.json?.utf8 ?? "nil")")
+        }
+    }
+    
+    init() {
+        theme = Theme.themes.randomElement()!
+        model = EmojiMemoryGame.createMemoryGame(theme: theme)
+    }
     	
     //if you put static it means function on the type(EmojiMemoryGame), x function on instance of class
-    static func createMemoryGame() -> MemoryGame<String> {
-        let theme = MemoryGame<String>.Theme.getRandomCase()
-        let emojis: Array<String> = theme.getEmojiArray()
-        return MemoryGame<String>(numberOfPairsOfCards: Int.random(in: 2...5),theme: theme ) { pairIndex in
+    static func createMemoryGame(theme: Theme) -> MemoryGame<String> {
+        let emojis: Array<String> = theme.emojis
+        return MemoryGame<String>(numberOfPairsOfCards: theme.numberOfCards) { pairIndex in
             return emojis[pairIndex]
         }    //_  means unused in swift
     }
@@ -34,9 +43,6 @@ class EmojiMemoryGame : ObservableObject{
     // MARK: - Access to the model
     var cards: Array<MemoryGame<String>.Card>{
         model.cards
-    }
-    var theme: MemoryGame<String>.Theme{
-        model.theme
     }
     
     var score: Int{
@@ -51,7 +57,8 @@ class EmojiMemoryGame : ObservableObject{
     }
     
     func startNewGame(){
-        model = EmojiMemoryGame.createMemoryGame()
+        theme = Theme.themes.randomElement()!
+        model = EmojiMemoryGame.createMemoryGame(theme: theme)
     }
     
 }
