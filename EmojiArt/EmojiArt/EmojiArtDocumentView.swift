@@ -10,19 +10,23 @@ import SwiftUI
 struct EmojiArtDocumentView: View {
     @ObservedObject var document: EmojiArtDocument
     @State private var selectedEmojis :Set<EmojiArt.Emoji> = []
+    @State private var chosenPalette: String = ""
     
     var body: some View {
         VStack {
-            ScrollView(.horizontal) {
-                HStack {
-                    ForEach(EmojiArtDocument.pallete.map { String($0) }, id: \.self) { emoji in
-                        Text(emoji)
-                            .font(Font.system(size: defaultEmojiSize))
-                            .onDrag { NSItemProvider(object: emoji as NSString) }
+            HStack{
+                PaletteChooser(document: document, chosenPallete: $chosenPalette	)
+                ScrollView(.horizontal) {
+                    HStack {
+                        ForEach(chosenPalette.map { String($0) }, id: \.self) { emoji in
+                            Text(emoji)
+                                .font(Font.system(size: defaultEmojiSize))
+                                .onDrag { NSItemProvider(object: emoji as NSString) }
+                        }
                     }
                 }
+                .onAppear{chosenPalette = document.defaultPalette}
             }
-            .padding(.horizontal)
             GeometryReader { geometry in
                 ZStack {
                     Color.white.overlay(
@@ -31,19 +35,23 @@ struct EmojiArtDocumentView: View {
                             .offset(panOffset)
                     )
                         .gesture(doubleTapToZoom(in: geometry.size))
-                    ForEach(document.emojis) { emoji in
-                        Text(emoji.text)
-                            // using conditionalIf extension
-                            .conditionalIf(selectedEmojis.contains(matching: emoji)) { $0.overlay(Rectangle().stroke(Color.green, lineWidth: 2))}
-                            .font(animatableWithSize: emoji.fontSize * zoomScale(for: emoji))
-                            .position(position(for: emoji, in: geometry.size))
-                            .offset(dragOffset(for: emoji))
-                            .onTapGesture {selectedEmojis.toggleMatching(emoji)}
-                            .onLongPressGesture {
-                                document.removeEmoji(emoji)
-                                selectedEmojis.remove(emoji)
-                            }
-                            .gesture(emojiDragGesture())
+                    if isLoading{
+                        Image(systemName: "hourglass").imageScale(.large).spinning()
+                    }else{
+                        ForEach(document.emojis) { emoji in
+                            Text(emoji.text)
+                                // using conditionalIf extension
+                                .conditionalIf(selectedEmojis.contains(matching: emoji)) { $0.overlay(Rectangle().stroke(Color.green, lineWidth: 2))}
+                                .font(animatableWithSize: emoji.fontSize * zoomScale(for: emoji))
+                                .position(position(for: emoji, in: geometry.size))
+                                .offset(dragOffset(for: emoji))
+                                .onTapGesture {selectedEmojis.toggleMatching(emoji)}
+                                .onLongPressGesture {
+                                    document.removeEmoji(emoji)
+                                    selectedEmojis.remove(emoji)
+                                }
+                                .gesture(emojiDragGesture())
+                        }
                     }
                 }
                 .clipped()
@@ -51,6 +59,9 @@ struct EmojiArtDocumentView: View {
                 // .exclusively
                 .gesture(zoomGesture().exclusively(before: tapToClearSelectedEmojis()))
                 .edgesIgnoringSafeArea([.horizontal, .bottom])
+                .onReceive(document.$backgroundImage){ image in
+                    zoomToFit(image, in: geometry.size)
+                }
                 .onDrop(of: ["public.image","public.text"], isTargeted: nil) { providers, location in
                     // SwiftUI bug (as of 13.4)? the location is supposed to be in our coordinate system
                     // however, the y coordinate appears to be in the global coordinate system
@@ -63,6 +74,11 @@ struct EmojiArtDocumentView: View {
             }
         }
     }
+    
+    var isLoading: Bool{
+        document.backgroundURL != nil && document.backgroundImage == nil
+    }
+    
     
     @State private var steadyStateZoomScale: CGFloat = 1.0
     @GestureState private var gestureZoomScale: CGFloat = 1.0
@@ -163,7 +179,7 @@ struct EmojiArtDocumentView: View {
     
     private func drop(providers: [NSItemProvider], at location: CGPoint) -> Bool {
         var found = providers.loadFirstObject(ofType: URL.self) { url in
-            document.setBackgroundURL(url)
+            document.backgroundURL = url
         }
         if !found {
             found = providers.loadObjects(ofType: String.self) { string in
