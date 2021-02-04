@@ -7,27 +7,36 @@
 
 import SwiftUI
 
+extension Grid where Item: Identifiable, ID == Item.ID {
+    init( _ items: [Item],viewForItem:@escaping (Item)->ItemView){
+        self.init(items,id: \Item.id , viewForItem: viewForItem)
+    }
+    
+}
+
 //generic structure example
 //grid container
-struct Grid<Item, ItemView>: View where Item: Identifiable, ItemView: View {
+struct Grid<Item, ID,ItemView>: View where ID: Hashable ,ItemView: View {
     private var items: [Item]
     private var viewForItem: (Item) -> ItemView
+    private var id: KeyPath<Item, ID>
     
     //escaping closure : it is going to escape from initializer without getting called
     //change them to reference type and have pointers to them.
     //avcid memory cycle (keyword)
-    init( _ items: [Item], viewForItem:@escaping (Item)->ItemView){
+    init( _ items: [Item], id: KeyPath<Item,ID>, viewForItem:@escaping (Item)->ItemView){
         self.items = items
+        self.id = id
         self.viewForItem = viewForItem
     }
     var body: some View {
         GeometryReader{ geometry in
             let layout :GridLayout = GridLayout(itemCount: items.count, in: geometry.size)
-            ForEach(items) {item in
-                let index = items.firstIndex(matching: item)!
+            ForEach(items, id: id) { item in
+                let index = items.firstIndex(where:{ item[keyPath: id] == $0[keyPath: id] })
                 viewForItem(item)
                     .frame(width: layout.itemSize.width, height:layout.itemSize.height)
-                    .position(layout.location(ofItemAt: index))
+                    .position(layout.location(ofItemAt: index!))
             }
         }
     }
