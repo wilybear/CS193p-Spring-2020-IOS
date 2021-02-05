@@ -24,3 +24,8 @@ For detail Information (Lecture notes)
 
 # Assignment 4
 ![ezgif com-gif-maker](https://user-images.githubusercontent.com/26200629/106243199-4a637280-624c-11eb-8c86-9b7fc8015f70.gif)
+
+# Assignment 6
+![Simulator Screen Shot - iPhone 11 - 2021-02-06 at 02 08 15](https://user-images.githubusercontent.com/26200629/107065660-5ccb4680-6820-11eb-9481-fff8d1110d11.png)
+![Simulator Screen Shot - iPhone 11 - 2021-02-06 at 02 08 29](https://user-images.githubusercontent.com/26200629/107065666-5f2da080-6820-11eb-9581-4f030dc10612.png)
+![Simulator Screen Shot - iPhone 11 - 2021-02-06 at 02 08 50](https://user-images.githubusercontent.com/26200629/107065671-5fc63700-6820-11eb-8961-111016a882cd.png)

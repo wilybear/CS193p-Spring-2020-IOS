@@ -31,7 +31,7 @@ struct Grid<Item, ID,ItemView>: View where ID: Hashable ,ItemView: View {
     }
     var body: some View {
         GeometryReader{ geometry in
-            let layout :GridLayout = GridLayout(itemCount: items.count, in: geometry.size)
+            let layout :GridLayout = GridLayout(itemCount: items.count,nearAspectRatio: 0.75 ,in: geometry.size)
             ForEach(items, id: id) { item in
                 let index = items.firstIndex(where:{ item[keyPath: id] == $0[keyPath: id] })
                 viewForItem(item)

@@ -23,11 +23,9 @@ struct EmojiMemoryGameView: View {
                 }, label: { Text("New Game")})  //see documents about localizedString key
                 Spacer()
                 Text(String(viewModel.score))
-                Spacer()
-                Text(viewModel.theme.name)
-                    .padding()
             }
-            .font(Font.title2)
+            .font(Font.title3)
+            .padding()
 
             Grid(viewModel.cards) { card in
                 CardView(card: card).onTapGesture {
@@ -35,7 +33,6 @@ struct EmojiMemoryGameView: View {
                         viewModel.choose(card: card)
                     }
                 }
-                .aspectRatio(0.66, contentMode: .fit)
                 .padding()
                 //sily question return CardView doesn't genreate error
             }
@@ -93,10 +90,4 @@ struct CardView: View{
 }
 
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        let game = EmojiMemoryGame()
-        game.choose(card: game.cards[2])
-        return EmojiMemoryGameView(viewModel: game)
-    }
-}
+
