@@ -21,14 +21,13 @@ class EmojiArtDocumentStore: ObservableObject
     }
     
     func setName(_ name: String, for document: EmojiArtDocument) {
-        if let url = directory?.appendingPathComponent(name){
-            // if rename file
-            if !documentNames.values.contains(name){
+        if let url = directory?.appendingPathComponent(name) {
+            if !documentNames.values.contains(name) {
                 removeDocument(document)
                 document.url = url
                 documentNames[document] = name
             }
-        }else{
+        } else {
             documentNames[document] = name
         }
     }
@@ -39,19 +38,18 @@ class EmojiArtDocumentStore: ObservableObject
     
     func addDocument(named name: String = "Untitled") {
         let uniqueName = name.uniqued(withRespectTo: documentNames.values)
-        // documentNames.values is not array, it is collection
         let document: EmojiArtDocument
-        if let url = directory?.appendingPathComponent(uniqueName){
-            document = EmojiArtDocument(url:url)
-        }else{
+        if let url = directory?.appendingPathComponent(uniqueName) {
+            document = EmojiArtDocument(url: url)
+        } else {
             document = EmojiArtDocument()
         }
         documentNames[document] = uniqueName
     }
 
     func removeDocument(_ document: EmojiArtDocument) {
-        if let name = documentNames[document], let url = directory?.appendingPathComponent(name){
-            try? FileManager.default.removeItem(at: url) 
+        if let name = documentNames[document], let url = directory?.appendingPathComponent(name) {
+            try? FileManager.default.removeItem(at: url)
         }
         documentNames[document] = nil
     }
@@ -68,19 +66,20 @@ class EmojiArtDocumentStore: ObservableObject
             UserDefaults.standard.set(names.asPropertyList, forKey: defaultsKey)
         }
     }
+    
     private var directory: URL?
     
-    init(directory: URL){
+    init(directory: URL) {
         self.name = directory.lastPathComponent
-        self.directory = directory;
-        do{
-            let documents = try FileManager.default.contentsOfDirectory(atPath: directory.path) //array of String names of file
-            for document in documents{
+        self.directory = directory
+        do {
+            let documents = try FileManager.default.contentsOfDirectory(atPath: directory.path)
+            for document in documents {
                 let emojiArtDocument = EmojiArtDocument(url: directory.appendingPathComponent(document))
-                documentNames[emojiArtDocument] = document
+                self.documentNames[emojiArtDocument] = document
             }
-        } catch{
-            print("EmojiArtDocumentStore: couldn't store from directory \(directory): \(error.localizedDescription)")
+        } catch {
+            print("EmojiArtDocumentStore: couldn't create store from directory \(directory): \(error.localizedDescription)")
         }
     }
 }

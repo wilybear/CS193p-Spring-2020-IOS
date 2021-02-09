@@ -28,6 +28,7 @@
 		37A0FB2625BE93DC0077EA6F /* EmojiArtExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A0FB2525BE93DC0077EA6F /* EmojiArtExtensions.swift */; };
 		37A0FB2925BFF50E0077EA6F /* OptionalImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A0FB2825BFF50E0077EA6F /* OptionalImage.swift */; };
 		37A0FB2C25BFF8290077EA6F /* AnimatableSystemFontModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A0FB2B25BFF8290077EA6F /* AnimatableSystemFontModifier.swift */; };
+		37A75ECC25D2FEF000557CD5 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A75ECB25D2FEF000557CD5 /* ImagePicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,7 @@
 		37A0FB2525BE93DC0077EA6F /* EmojiArtExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiArtExtensions.swift; sourceTree = "<group>"; };
 		37A0FB2825BFF50E0077EA6F /* OptionalImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalImage.swift; sourceTree = "<group>"; };
 		37A0FB2B25BFF8290077EA6F /* AnimatableSystemFontModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatableSystemFontModifier.swift; sourceTree = "<group>"; };
+		37A75ECB25D2FEF000557CD5 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,28 +88,29 @@
 		37A0FB0825BE7DC60077EA6F /* EmojiArt */ = {
 			isa = PBXGroup;
 			children = (
+				37A0FB2B25BFF8290077EA6F /* AnimatableSystemFontModifier.swift */,
+				37A0FB0925BE7DC60077EA6F /* AppDelegate.swift */,
+				37A0FB0F25BE7DC60077EA6F /* Assets.xcassets */,
 				3749263D25CC03F900E2F10E /* EditableText.swift */,
-				3749263725C952D000E2F10E /* EmojiArtDocumentStore.swift */,
+				37A0FB2225BE83100077EA6F /* EmojiArt.swift */,
+				3749262C25C6C1EA00E2F10E /* EmojiArtDocument+Palette.swift */,
 				3749263A25C95B7200E2F10E /* EmojiArtDocumentChooser.swift */,
+				3749263725C952D000E2F10E /* EmojiArtDocumentStore.swift */,
+				37A0FB0D25BE7DC60077EA6F /* EmojiArtDocumentView.swift */,
+				37A75ECB25D2FEF000557CD5 /* ImagePicker.swift */,
+				37A0FB1F25BE7DE20077EA6F /* EmojiArtDoucment.swift */,
+				37A0FB2525BE93DC0077EA6F /* EmojiArtExtensions.swift */,
 				3749263225C7F4B700E2F10E /* Grid.swift */,
 				3749263125C7F4B700E2F10E /* GridLayout.swift */,
-				379C68BA25C30BB500933C2A /* View+If.swift */,
-				3749262C25C6C1EA00E2F10E /* EmojiArtDocument+Palette.swift */,
-				37A0FB2B25BFF8290077EA6F /* AnimatableSystemFontModifier.swift */,
-				379C68C225C3DBC700933C2A /* Set+ToggleMatching.swift */,
-				37A0FB0925BE7DC60077EA6F /* AppDelegate.swift */,
-				37A0FB0B25BE7DC60077EA6F /* SceneDelegate.swift */,
-				37A0FB0D25BE7DC60077EA6F /* EmojiArtDocumentView.swift */,
-				3749262625C6B65900E2F10E /* Spinning.swift */,
-				37A0FB2825BFF50E0077EA6F /* OptionalImage.swift */,
-				37A0FB2225BE83100077EA6F /* EmojiArt.swift */,
-				37A0FB1F25BE7DE20077EA6F /* EmojiArtDoucment.swift */,
-				3749262925C6BFD400E2F10E /* PaleteChooser.swift */,
-				37A0FB2525BE93DC0077EA6F /* EmojiArtExtensions.swift */,
-				37A0FB0F25BE7DC60077EA6F /* Assets.xcassets */,
-				37A0FB1425BE7DC60077EA6F /* LaunchScreen.storyboard */,
 				37A0FB1725BE7DC60077EA6F /* Info.plist */,
+				37A0FB1425BE7DC60077EA6F /* LaunchScreen.storyboard */,
+				37A0FB2825BFF50E0077EA6F /* OptionalImage.swift */,
+				3749262925C6BFD400E2F10E /* PaleteChooser.swift */,
 				37A0FB1125BE7DC60077EA6F /* Preview Content */,
+				37A0FB0B25BE7DC60077EA6F /* SceneDelegate.swift */,
+				379C68C225C3DBC700933C2A /* Set+ToggleMatching.swift */,
+				3749262625C6B65900E2F10E /* Spinning.swift */,
+				379C68BA25C30BB500933C2A /* View+If.swift */,
 			);
 			path = EmojiArt;
 			sourceTree = "<group>";
@@ -197,6 +200,7 @@
 				37A0FB0E25BE7DC60077EA6F /* EmojiArtDocumentView.swift in Sources */,
 				3749263325C7F4B700E2F10E /* GridLayout.swift in Sources */,
 				379C68C325C3DBC700933C2A /* Set+ToggleMatching.swift in Sources */,
+				37A75ECC25D2FEF000557CD5 /* ImagePicker.swift in Sources */,
 				3749262725C6B65900E2F10E /* Spinning.swift in Sources */,
 				3749263425C7F4B700E2F10E /* Grid.swift in Sources */,
 				37A0FB2925BFF50E0077EA6F /* OptionalImage.swift in Sources */,

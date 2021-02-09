@@ -78,7 +78,7 @@ struct EmojiArtDocumentView: View {
                     location = CGPoint(x: location.x / zoomScale, y: location.y / zoomScale)
                     return drop(providers: providers, at: location)
                 }
-                .navigationBarItems(trailing: Button(action: {
+                .navigationBarItems(leading: pickImage ,trailing: Button(action: {
                     if let url = UIPasteboard.general.url, url != document.backgroundURL {
                         confirmBackgroundPaste = true
                     }else{
@@ -100,6 +100,38 @@ struct EmojiArtDocumentView: View {
                         document.backgroundURL = UIPasteboard.general.url
                   },
                   secondaryButton: .cancel())
+        }
+    }
+    
+    @State private var showImagePicker = false
+    @State private var imagePickerSourceType = UIImagePickerController.SourceType.photoLibrary
+    
+    private var pickImage: some View{
+        HStack{
+            Image(systemName: "photo").imageScale(.large).foregroundColor(.accentColor)
+                .onTapGesture {
+                    self.imagePickerSourceType = .photoLibrary
+                    showImagePicker = true
+                }
+            if UIImagePickerController.isSourceTypeAvailable(.camera){
+                Image(systemName: "camera").imageScale(.large).foregroundColor(.accentColor)
+                    .onTapGesture {
+                        self.imagePickerSourceType = .camera
+                        showImagePicker = true
+                    }
+            }
+        }
+        .sheet(isPresented: $showImagePicker){
+            ImagePicker(sourceType: imagePickerSourceType) { image in
+                if image != nil{
+                    // if i ask my main queue to go do this closure, its gonna put it in the list and its gonna finish doing all the things it's doing here
+                    // this means that do this thing after everything settles down
+                    DispatchQueue.main.async{
+                        document.backgroundURL = image!.storeInFilesystem()
+                    }
+                }
+                showImagePicker = false
+            }
         }
     }
     

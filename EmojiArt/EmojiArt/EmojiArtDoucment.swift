@@ -60,7 +60,9 @@ class EmojiArtDocument : ObservableObject, Hashable, Identifiable{
     }
     
     private func save(_ emojiArt: EmojiArt){
-        try? emojiArt.json?.write(to: url!)
+        if url != nil {
+            try? emojiArt.json?.write(to: url!)
+        }
     }
     
     var emojis: [EmojiArt.Emoji] { emojiArt.emojis }
@@ -96,16 +98,16 @@ class EmojiArtDocument : ObservableObject, Hashable, Identifiable{
         }
     }
     
-    private func fetchBackgroundImageData(){
+    private func fetchBackgroundImageData() {
         backgroundImage = nil
-        if let url = emojiArt.backgroundURL{
+        if let url = emojiArt.backgroundURL?.imageURL { // NOTE: added ?.imageURL here in L14 to fix up filesystem url
             fetchImageCancellable?.cancel()
-            fetchImageCancellable  = URLSession.shared.dataTaskPublisher(for: url)
-                .map{data, urlResponse in UIImage(data: data)}
+            fetchImageCancellable = URLSession.shared.dataTaskPublisher(for: url)
+                .map { data, urlResponse in UIImage(data: data) }
                 .receive(on: DispatchQueue.main)
                 .replaceError(with: nil)
                 .assign(to: \.backgroundImage, on: self)
-        }	
+        }
     }
     
     
