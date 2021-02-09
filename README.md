@@ -21,6 +21,10 @@ For detail Information (Lecture notes)
 - Assignment 5 - Done
 - Lecture 9 - Done
 - Lecture 10 - Done
+- Lecture 11 - Done
+- Lecture 12 - Done
+- Lecture 13 - Done
+- Lecture 14 - Done
 
 # Assignment 4
 ![ezgif com-gif-maker](https://user-images.githubusercontent.com/26200629/106243199-4a637280-624c-11eb-8c86-9b7fc8015f70.gif)
